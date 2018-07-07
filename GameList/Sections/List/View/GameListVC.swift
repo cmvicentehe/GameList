@@ -11,6 +11,8 @@ import UIKit
 protocol GameListUI: class {
     var presenter: GameListPresenter? { get set }
     
+    func displayActivityIndicator()
+    func hideActivityIndicator()
     func show(error message: String)
     func gamesReceived()
 }
@@ -21,10 +23,15 @@ class GameListVC: UIViewController {
     
     // MARK: Outlets
     @IBOutlet weak var gameList: UITableView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    // MARK: Statics
+    static let cellIdentifier: String = "GameCell"
     
     // MARK: Life - Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Game List"
         self.presenter?.viewDidLoaded()
     }
 }
@@ -32,19 +39,56 @@ class GameListVC: UIViewController {
 extension GameListVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0 // TODO: Implement!
+        return self.presenter?.games.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell(style: .default, reuseIdentifier: "GameCell") // TODO: Implement!
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: GameListVC.cellIdentifier, for: indexPath) as? GameCell else {
+            return GameCell(style: .default, reuseIdentifier: GameListVC.cellIdentifier)
+        }
+        
+        if let game = self.presenter?.games[indexPath.row] {
+            cell.configureCell(with: game)
+        }
+        
+        return cell
+    }
+}
+
+extension GameListVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 150
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 150
     }
 }
 
 extension GameListVC: GameListUI {
     func show(error message: String) {
-        // TODO: Display an alert
+        print("Error received: \(message)")
+        
     }
+    
     func gamesReceived() {
-        self.gameList.reloadData()
+        DispatchQueue.main.async {
+            self.gameList.reloadData()
+        }
+    }
+    
+    func displayActivityIndicator() {
+        DispatchQueue.main.async {
+            self.activityIndicator.startAnimating()
+            self.activityIndicator.isHidden = false
+        }
+    }
+    
+    func hideActivityIndicator() {
+        DispatchQueue.main.async {
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.isHidden = true
+        }
     }
 }

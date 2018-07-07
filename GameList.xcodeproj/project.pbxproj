@@ -20,6 +20,7 @@
 		D435337820F0B370001F31D6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D435337720F0B370001F31D6 /* Constants.swift */; };
 		D435337A20F0BD6B001F31D6 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D435337920F0BD6B001F31D6 /* NetworkClient.swift */; };
 		D435337C20F0C371001F31D6 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = D435337B20F0C371001F31D6 /* Response.swift */; };
+		D4CC093820F0E13A00D5028B /* GameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4CC093720F0E13A00D5028B /* GameCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		D435337720F0B370001F31D6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D435337920F0BD6B001F31D6 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
 		D435337B20F0C371001F31D6 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		D4CC093720F0E13A00D5028B /* GameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				D435336620F0B21F001F31D6 /* GameListVC.swift */,
+				D4CC093720F0E13A00D5028B /* GameCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -357,6 +360,7 @@
 			files = (
 				D435337320F0B2DA001F31D6 /* GameListInteractor.swift in Sources */,
 				D435337520F0B2EB001F31D6 /* Game.swift in Sources */,
+				D4CC093820F0E13A00D5028B /* GameCell.swift in Sources */,
 				D435336F20F0B21F001F31D6 /* GameListVC.swift in Sources */,
 				D435336A20F0B21F001F31D6 /* AppDelegate.swift in Sources */,
 				D435337A20F0BD6B001F31D6 /* NetworkClient.swift in Sources */,

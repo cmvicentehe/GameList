@@ -24,13 +24,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let frame = UIScreen.main.bounds
         window = UIWindow(frame: frame)
         if let gameListVC: GameListVC = storyboard.instantiateViewController(withIdentifier: "GameListVC") as? GameListVC {
-            var gameListPresenter = GameListPresenter()
-            var gameListInteractor = GameListInteractor()
+            let gameListPresenter = GameListPresenter()
+            let gameListInteractor = GameListInteractor()
             gameListPresenter.view = gameListVC
             gameListPresenter.interactor = gameListInteractor
             gameListInteractor.presenter = gameListPresenter
             gameListVC.presenter = gameListPresenter
-            window?.rootViewController = gameListVC
+            let navigationController = UINavigationController(rootViewController: gameListVC)
+            window?.rootViewController = navigationController
         }
         window?.makeKeyAndVisible()
     }

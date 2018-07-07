@@ -14,13 +14,12 @@ protocol GameListInteractorInput {
 }
 
 protocol GameListInteractorOutput {
-    // TODO: Implement outoput methos
+    func gamesReceived(_ games: [Game])
+    func errorReceived(_ error: String)
 }
 
-struct GameListInteractor {
+class GameListInteractor {
     var presenter: GameListInteractorOutput?
-    
-    
     
     fileprivate func buildUrlRequest() -> URLRequest? {
         guard let url = URL(string: Network.url) else {
@@ -37,12 +36,12 @@ struct GameListInteractor {
     fileprivate func parse(_ data: Data) -> [Game]? {
         // TODO: Implement using Codable and decodable methods instead
         guard let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [AnyHashable: Any] else  {
-            print("Invalid JSON")
+            self.presenter?.errorReceived("Error parsing json")
             return nil
         }
         
         guard let gamesDict: [AnyHashable: Any] = json?["games"] as? [AnyHashable : Any] else {
-            print("Error parsing dictionary")
+            self.presenter?.errorReceived("Error parsing dictionary")
             return nil
         }
         let gameKeys = gamesDict.keys
@@ -59,7 +58,7 @@ struct GameListInteractor {
         
         gamesListDict.forEach { gameDict in
             let id: String = gameDict["gameId"] as? String ?? ""
-            let name: String = gameDict["name"] as? String ?? ""
+            let name: String = gameDict["gameName"] as? String ?? ""
             let playUrl: String? = gameDict["playUrl"] as? String
             let launchLocale: String? = gameDict["launchLocale"] as? String
             let imageUrl: String = gameDict["imageUrl"] as? String ?? ""
@@ -87,6 +86,7 @@ extension GameListInteractor: GameListInteractorInput {
         let networkClient = NetworkClient()
         guard let request = self.buildUrlRequest() else {
             print("Invalid url request")
+            self.presenter?.errorReceived("Invalid url request")
             return
         }
         
@@ -94,11 +94,16 @@ extension GameListInteractor: GameListInteractorInput {
             guard let data = response?.data else {
                 if let error =  response?.error {
                     print("There was an error \(error)")
-                    // TODO: Notify Error to presenter and view
+                     self.presenter?.errorReceived(error.localizedDescription)
                 }
                 return
             }
-            let games = self.parse(data)
+            guard let games = self.parse(data) else {
+                print("Invalid game list")
+                self.presenter?.errorReceived("Invalid url request")
+                return
+            }
+            self.presenter?.gamesReceived(games)
         }
     }
     

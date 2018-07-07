@@ -15,17 +15,36 @@ protocol GameListPresenterInput {
     func viewDidLoaded()
 }
 
-struct GameListPresenter {
+class GameListPresenter {
     var view: GameListUI?
     var interactor: GameListInteractorInput?
+    var games: [Game]
+    
+    convenience init() {
+        let games = [Game]()
+        self.init(games: games)
+    }
+    
+    init(games: [Game]) {
+        self.games = games
+    }
 }
 
 extension GameListPresenter: GameListPresenterInput {
     func viewDidLoaded() {
+        self.view?.displayActivityIndicator()
         self.interactor?.fetchGames()
     }
 }
 
 extension GameListPresenter: GameListInteractorOutput {
+    func gamesReceived(_ games: [Game]) {
+        self.games = games
+        self.view?.hideActivityIndicator()
+        self.view?.gamesReceived()
+    }
     
+    func errorReceived(_ error: String) {
+        self.view?.show(error: error)
+    }
 }
