@@ -20,17 +20,20 @@ struct NetworkClient {
             self.init(urlSession: urlSession)
         }
     
-    func performRequest(for urlRequest: URLRequest, completion: @escaping (URLResponse?) -> Void)  {
-            var urlResponse: URLResponse? = nil
+    func performRequest(for urlRequest: URLRequest, completion: @escaping (Response?) -> Void)  {
+            var urlResponse: Response? = nil
             self.urlSession.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
-                // TODO: Manage task fail and cancel it
                 guard let responseNotNil = response as? HTTPURLResponse else {
                     print("Invalid response")
                     return
                 }
-                urlResponse = responseNotNil
+                urlResponse = Response(statusCode: responseNotNil.statusCode,
+                                       url: responseNotNil.url,
+                                       data: data,
+                                       error: error)
+                
+                completion(urlResponse)
             }).resume()
         
-           completion(urlResponse)
         }
 }

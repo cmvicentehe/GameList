@@ -9,5 +9,5 @@
 import Foundation
 
 struct Network {
-    let url = "https://api.unibet.com/game-library-rest-api/getGamesByMarketAndDevice.json?jurisdiction=UK&brand=unibet&deviceGroup=mobilephone&locale=en_GB&currency=GBP&categories=casino,softgames&clientId=casinoapp" // This url should be divided in request parameters (scheme, host, path ,parameters...) 
+    static let url = "https://api.unibet.com/game-library-rest-api/getGamesByMarketAndDevice.json?jurisdiction=UK&brand=unibet&deviceGroup=mobilephone&locale=en_GB&currency=GBP&categories=casino,softgames&clientId=casinoapp" // This url should be divided in request parameters (scheme, host, path ,parameters...)
 }

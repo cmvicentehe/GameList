@@ -10,10 +10,11 @@ import Foundation
 
 struct Game: Codable {
     let id: String
-    let playUrl: String
-    let launchLocale: String
+    let name: String
+    let playUrl: String?
+    let launchLocale: String?
     let imageUrl: String
-    let backgroundImageUrl: String
-    let tags: [String]
-    let vendorId: String
+    let backgroundImageUrl: String?
+    let tags: [String]?
+    let vendorId: String?
 }

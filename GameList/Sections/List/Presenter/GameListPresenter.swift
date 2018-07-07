@@ -11,6 +11,8 @@ import Foundation
 protocol GameListPresenterInput {
     var view: GameListUI? { get set }
     var interactor: GameListInteractorInput? { get set }
+    
+    func viewDidLoaded()
 }
 
 struct GameListPresenter {
@@ -19,7 +21,9 @@ struct GameListPresenter {
 }
 
 extension GameListPresenter: GameListPresenterInput {
-   
+    func viewDidLoaded() {
+        self.interactor?.fetchGames()
+    }
 }
 
 extension GameListPresenter: GameListInteractorOutput {

@@ -10,6 +10,9 @@ import UIKit
 
 protocol GameListUI: class {
     var presenter: GameListPresenter? { get set }
+    
+    func show(error message: String)
+    func gamesReceived()
 }
 
 class GameListVC: UIViewController {
@@ -22,7 +25,7 @@ class GameListVC: UIViewController {
     // MARK: Life - Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        self.presenter?.viewDidLoaded()
     }
 }
 
@@ -37,4 +40,11 @@ extension GameListVC: UITableViewDataSource {
     }
 }
 
-extension GameListVC: GameListUI {}
+extension GameListVC: GameListUI {
+    func show(error message: String) {
+        // TODO: Display an alert
+    }
+    func gamesReceived() {
+        self.gameList.reloadData()
+    }
+}
