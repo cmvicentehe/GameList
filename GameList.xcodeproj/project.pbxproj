@@ -18,6 +18,7 @@
 		D435337320F0B2DA001F31D6 /* GameListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D435337220F0B2DA001F31D6 /* GameListInteractor.swift */; };
 		D435337520F0B2EB001F31D6 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = D435337420F0B2EB001F31D6 /* Game.swift */; };
 		D435337820F0B370001F31D6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D435337720F0B370001F31D6 /* Constants.swift */; };
+		D435337A20F0BD6B001F31D6 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D435337920F0BD6B001F31D6 /* NetworkClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		D435337220F0B2DA001F31D6 /* GameListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameListInteractor.swift; sourceTree = "<group>"; };
 		D435337420F0B2EB001F31D6 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		D435337720F0B370001F31D6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D435337920F0BD6B001F31D6 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,6 +215,7 @@
 		D435337620F0B363001F31D6 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				D435337920F0BD6B001F31D6 /* NetworkClient.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 				D435337520F0B2EB001F31D6 /* Game.swift in Sources */,
 				D435336F20F0B21F001F31D6 /* GameListVC.swift in Sources */,
 				D435336A20F0B21F001F31D6 /* AppDelegate.swift in Sources */,
+				D435337A20F0BD6B001F31D6 /* NetworkClient.swift in Sources */,
 				D435337120F0B2C9001F31D6 /* GameListPresenter.swift in Sources */,
 				D435337820F0B370001F31D6 /* Constants.swift in Sources */,
 			);
