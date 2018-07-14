@@ -34,49 +34,21 @@ class GameListInteractor {
     }
     
     fileprivate func parse(_ data: Data) -> [Game]? {
-        // TODO: Implement using Codable and decodable methods instead
-        guard let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [AnyHashable: Any] else  {
-            self.presenter?.errorReceived("Error parsing json")
-            return nil
-        }
-        
-        guard let gamesDict: [AnyHashable: Any] = json?["games"] as? [AnyHashable : Any] else {
-            self.presenter?.errorReceived("Error parsing dictionary")
-            return nil
-        }
-        let gameKeys = gamesDict.keys
-        
-        var gamesListDict: [[AnyHashable: Any]] = [[AnyHashable: Any]]()
-        
-        gameKeys.forEach { key in
-            if  let gameDictReceived = gamesDict[key] as? [AnyHashable : Any] {
-                gamesListDict.append(gameDictReceived )
+        var games: [Game]? = [Game]()
+        do {
+            let decoder = JSONDecoder()
+            let gamesDictionary: GameDictionary = try decoder.decode(GameDictionary.self, from: data)
+            let gameListDictionary = gamesDictionary.games
+            gameListDictionary.keys.forEach { key in
+                if let game = gameListDictionary[key] {
+                    games?.append(game)
+                }
             }
-        }
-        
-        var games: [Game] = [Game]()
-        
-        gamesListDict.forEach { gameDict in
-            let id: String = gameDict["gameId"] as? String ?? ""
-            let name: String = gameDict["gameName"] as? String ?? ""
-            let playUrl: String? = gameDict["playUrl"] as? String
-            let launchLocale: String? = gameDict["launchLocale"] as? String
-            let imageUrl: String = gameDict["imageUrl"] as? String ?? ""
-            let backgroundImageUrl: String? = gameDict["backgroundImageUrl"] as? String ?? ""
-            let tags: [String]? = gameDict["tags"] as? [String]
-            let vendorId: String? = gameDict["vendorId"] as? String
             
-            let game = Game(id: id,
-                            name: name,
-                            playUrl: playUrl,
-                            launchLocale: launchLocale,
-                            imageUrl: imageUrl,
-                            backgroundImageUrl: backgroundImageUrl,
-                            tags: tags,
-                            vendorId: vendorId)
-            games.append(game)
+        } catch let error {
+            print("Error received", error)
         }
-        print("\(games)")
+        
         return games
     }
 }

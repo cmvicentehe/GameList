@@ -17,4 +17,15 @@ struct Game: Codable {
     let backgroundImageUrl: String?
     let tags: [String]?
     let vendorId: String?
+    
+    enum CodingKeys : String, CodingKey {
+        case id = "gameId"
+        case name = "gameName"
+        case playUrl
+        case launchLocale
+        case imageUrl
+        case backgroundImageUrl
+        case tags
+        case vendorId
+    }
 }
