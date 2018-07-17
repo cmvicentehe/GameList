@@ -25,7 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: frame)
         if let gameListVC: GameListVC = storyboard.instantiateViewController(withIdentifier: "GameListVC") as? GameListVC {
             let gameListPresenter = GameListPresenter()
-            let gameListInteractor = GameListInteractor()
+            let cache = NSCache<NSString, NSData>()
+            let imageDownloader = ImageDownloaderImpl(cache: cache)
+            let gameListInteractor = GameListInteractor(imageDownloader: imageDownloader)
             gameListPresenter.view = gameListVC
             gameListPresenter.interactor = gameListInteractor
             gameListInteractor.presenter = gameListPresenter

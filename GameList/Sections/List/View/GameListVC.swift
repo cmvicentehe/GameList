@@ -34,6 +34,11 @@ class GameListVC: UIViewController {
         self.title = "Game List"
         self.presenter?.viewDidLoaded()
     }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        self.presenter?.viewDidReciveMemoryWarning()
+    }
 }
 
 extension GameListVC: UITableViewDataSource {
@@ -50,8 +55,14 @@ extension GameListVC: UITableViewDataSource {
         
         if let game = self.presenter?.games[indexPath.row] {
             cell.configureCell(with: game)
+            
+            self.presenter?.cell(for: game) { data in
+                if let image = UIImage(data: data) {
+                    cell.set(image: image)
+                }
+            }
         }
-        
+
         return cell
     }
 }
