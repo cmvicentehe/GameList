@@ -11,6 +11,8 @@ import Foundation
 protocol GameListInteractorInput {
     var presenter: GameListInteractorOutput? { get set }
     func fetchGames()
+    func fetchImage(from game: Game, completion: @escaping (Data) -> Void)
+    func clearImageCache()
 }
 
 protocol GameListInteractorOutput {
@@ -20,6 +22,11 @@ protocol GameListInteractorOutput {
 
 class GameListInteractor {
     var presenter: GameListInteractorOutput?
+    let imageDownloader: ImageDownloader
+    
+    init(imageDownloader: ImageDownloader) {
+        self.imageDownloader = imageDownloader
+    }
     
     fileprivate func buildUrlRequest() -> URLRequest? {
         guard let url = URL(string: Network.url) else {
@@ -44,7 +51,6 @@ class GameListInteractor {
                     games?.append(game)
                 }
             }
-            
         } catch let error {
             print("Error received", error)
         }
@@ -79,4 +85,18 @@ extension GameListInteractor: GameListInteractorInput {
         }
     }
     
+    func fetchImage(from game: Game, completion: @escaping (Data) -> Void) {
+        let url = game.imageUrl
+        guard let data = self.imageDownloader.loadCachedImage(from: url) else {
+            print("Image \(url) NOT CACHED")
+            self.imageDownloader.loadImage(from: url, completion: completion)
+            return
+        }
+        print("Image \(url) CACHED")
+        completion(data)
+    }
+    
+    func clearImageCache() {
+        self.imageDownloader.clearCache()
+    }
 }

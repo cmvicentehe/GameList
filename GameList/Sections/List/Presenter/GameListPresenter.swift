@@ -13,6 +13,8 @@ protocol GameListPresenterInput {
     var interactor: GameListInteractorInput? { get set }
     
     func viewDidLoaded()
+    func viewDidReciveMemoryWarning()
+    func cell(for game: Game, completion: @escaping(Data) -> Void)
 }
 
 class GameListPresenter {
@@ -34,6 +36,14 @@ extension GameListPresenter: GameListPresenterInput {
     func viewDidLoaded() {
         self.view?.displayActivityIndicator()
         self.interactor?.fetchGames()
+    }
+    
+    func viewDidReciveMemoryWarning() {
+        self.interactor?.clearImageCache()
+    }
+    
+    func cell(for game: Game, completion: @escaping(Data) -> Void) {
+        self.interactor?.fetchImage(from: game, completion: completion)
     }
 }
 

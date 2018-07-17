@@ -22,23 +22,9 @@ class GameCell: UITableViewCell {
         self.gameImage.backgroundColor = UIColor.blue
         self.gameName.text = game.name
         self.gameIdentifier.text = game.id
-        
-        // TODO: Remove this method and create an Image Downloader with cache system to avoid asking for the image continously if it has already been downloaded
-        DispatchQueue.global(qos: .background).async() {
-            guard let imageURL = URL(string: game.imageUrl) else {
-                print("Invalid image url")
-                return
-            }
-            URLSession.shared.dataTask(with: imageURL) { data, response, error in
-                DispatchQueue.main.async {
-                    guard let dataNotNil = data else {
-                         print("Invalid data")
-                        return
-                    }
-                    self.gameImage.image = UIImage(data: dataNotNil)
-                }
-                }.resume()
-        }
+    }
     
+    func set(image: UIImage) {
+        self.gameImage.image = image
     }
 }
